@@ -36,9 +36,10 @@ public class ATeleop extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double rx = gamepad1.right_stick_x;
+            double frontBack = gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            double leftRight = gamepad1.left_stick_x; // Counteract imperfect strafing
+            double rightTurn = gamepad1.right_stick_x;
+            double leftTurn = gamepad1.rignt_tick_y
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
@@ -57,7 +58,7 @@ public class ATeleop extends LinearOpMode {
             shooterMotor.setPower(0.75);
 
             if (gamepad1.dpad_left) {
-                shooterMotor.setPower(0);
+                shooterMotor.setPower(1);
             }
 
             if (gamepad1.left_bumper) {
@@ -66,6 +67,48 @@ public class ATeleop extends LinearOpMode {
             } else {
                 servoleft.setPower(0);
                 servoright.setPower(0);
+            }
+            if(frontBack > 0)
+            {
+                frontLeftMotor.setPower(0.75);
+                frontRightMotor.setPower(0.75);
+                backLeftMotor.setPower(0.75);
+                backRightMotor.setPower(0.75);
+            }
+            if(frontBack < 0)
+            {
+                frontLeftMotor.setPower(-0.75);
+                frontRightMotor.setPower(-0.75);
+                backLeftMotor.setPower(-0.75);
+                backRightMotor.setPower(-0.75);
+            }
+            if(rightTurn > 0)
+            {
+                frontLeftMotor.setPower(0.75);
+                frontRightMotor.setPower(-0.75);
+                backLeftMotor.setPower(-0.75);
+                backRightMotor.setPower(-0.75);
+            }
+            if(leftTurn > 0)
+            {
+                frontLeftMotor.setPower(-0.75);
+                frontRightMotor.setPower(0.75);
+                backLeftMotor.setPower(0.75);
+                backRightMotor.setPower(0.75);
+            }
+            if(leftRight > 0)
+            {
+                frontLeftMotor.setPower(0.75);
+                frontRightMotor.setPower(-0.75);
+                backLeftMotor.setPower(-0.75);
+                backRightMotor.setPower(0.75);
+            }
+            if(leftRight < 0)
+            {
+                frontLeftMotor.setPower(-0.75);
+                frontRightMotor.setPower(0.75);
+                backLeftMotor.setPower(0.75);
+                backRightMotor.setPower(-0.75);
             }
 
         }
